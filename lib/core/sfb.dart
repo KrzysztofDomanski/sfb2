@@ -1,9 +1,11 @@
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sfb/core/dependency_injector.dart';
 import 'package:sfb/core/locale/app_localizations.dart';
 import 'package:sfb/core/routing/app_router.dart';
 import 'package:sfb/core/theme/app_theme.dart';
+import 'package:sfb/features/auth/bloc/auth_bloc.dart';
 
 class Sfb extends StatefulWidget {
   @Preview(name: 'Sfb App')
@@ -19,7 +21,7 @@ class _SfbState extends State<Sfb> {
   @override
   void initState() {
     super.initState();
-    _router = AppRouter();
+    _router = AppRouter(getIt<AuthBloc>());
   }
 
   @override
