@@ -1,20 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:sfb/core/dependency_injector.dart';
+import 'package:sfb/core/logger.dart';
+import 'package:sfb/core/sfb.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  Log.t('Application started');
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  runZonedGuarded(
+    () {
+      configureDependencies();
+      runApp(const Sfb());
+    },
+    (error, stackTrace) {
+      Log.e('Uncaught error', error, stackTrace);
+    },
+  );
 }
