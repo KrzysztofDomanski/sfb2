@@ -1,3 +1,3 @@
 # sfb
 
-A new Flutter project.
+Mobile and Web application for Social Fitness Bristol
