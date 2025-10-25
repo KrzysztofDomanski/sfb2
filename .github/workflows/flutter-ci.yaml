@@ -1,4 +1,4 @@
-name: Flutter CI
+name: FlutterCI
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Analyze and Build
+    name: analyze-test-build
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,13 @@ jobs:
         with:
           channel: stable
           cache: true
+
+      - name: Create .env from secrets
+        run: |
+          cat > .env <<EOF
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUB_KEY=${{ secrets.SUPABASE_PUB_KEY }}
+          EOF
 
       - name: Install dependencies
         run: flutter pub get
