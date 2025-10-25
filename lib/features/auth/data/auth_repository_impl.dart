@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sfb/features/auth/domain/auth_repository.dart';
 import 'package:sfb/features/auth/domain/user.dart';
 
-@singleton
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
   @override
   Stream<User?> get currentUser => throw UnimplementedError();

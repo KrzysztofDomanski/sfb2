@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:sfb/core/use_case.dart';
 import 'package:sfb/features/auth/domain/auth_repository.dart';
 
+@injectable
 class SignOut extends UseCase<void, NoParams> {
   final AuthRepository auth;
 
