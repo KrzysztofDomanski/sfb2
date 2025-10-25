@@ -1,4 +1,4 @@
-name: Flutter CI
+name: FlutterCI
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Analyze and Build
+    name: analyze-test-build
     runs-on: ubuntu-latest
 
     steps:
