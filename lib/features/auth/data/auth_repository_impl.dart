@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:sfb/features/auth/domain/auth_exceptions.dart' hide AuthException;
 import 'package:sfb/features/auth/domain/auth_repository.dart';
 import 'package:sfb/features/auth/domain/user.dart' as domain;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,12 +21,35 @@ class AuthRepositoryImpl extends AuthRepository {
       );
 
   @override
-  Future<void> signIn(String username, String password) {
-    throw UnimplementedError();
+  Future<void> signUp(String username, String password) async {
+    try {
+      await _auth.signUp(email: username, password: password);
+    } on AuthException catch (e) {
+      throw SignUpFailedException(e.message);
+    } catch (e) {
+      throw Exception('An unexpected error occurred during sign up.');
+    }
   }
 
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
+  Future<void> signIn(String username, String password) async {
+    try {
+      await _auth.signInWithPassword(email: username, password: password);
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('An unexpected error occurred during sign in.');
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('An unexpected error occurred during sign out.');
+    }
   }
 }

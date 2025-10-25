@@ -6,10 +6,10 @@ import 'package:sfb/core/dependency_injector.dart';
 import 'package:sfb/core/logger.dart';
 import 'package:sfb/core/sfb.dart';
 
-void main() {
+Future<void> main() async {
   Log.t('Application started');
 
-  runZonedGuarded(
+  await runZonedGuarded(
     () async {
       await initDatabase();
       configureDependencies();
