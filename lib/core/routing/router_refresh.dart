@@ -5,7 +5,7 @@ import 'package:sfb/features/auth/bloc/auth_bloc.dart';
 
 /// A ChangeNotifier that listens to AuthBloc state changes and notifies listeners.
 class RouterRefresh extends ChangeNotifier {
-  late StreamSubscription? userSubscription;
+  late StreamSubscription<AuthState>? userSubscription;
 
   RouterRefresh(Stream<AuthState> stream) {
     userSubscription = stream.listen((event) {
@@ -15,6 +15,7 @@ class RouterRefresh extends ChangeNotifier {
 
   @override
   void dispose() {
+    // ignore: discarded_futures dispose is not async
     userSubscription?.cancel();
     super.dispose();
   }

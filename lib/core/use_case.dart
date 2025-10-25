@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// An abstract class representing a use case with a return type and parameters.
+// ignore: one_member_abstracts
 abstract class UseCase<ReturnType, Params> {
   Future<ReturnType> call(Params params);
 }

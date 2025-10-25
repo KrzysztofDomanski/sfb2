@@ -5,8 +5,31 @@ import 'package:go_router/go_router.dart';
 import 'package:sfb/core/logger.dart';
 import 'package:sfb/core/routing/router_refresh.dart';
 import 'package:sfb/features/auth/bloc/auth_bloc.dart';
-import 'package:sfb/features/auth/presentation/auth_screen.dart';
+import 'package:sfb/features/auth/sign_in/presentation/sign_in_screen.dart';
+import 'package:sfb/features/auth/sign_up/presentation/sign_up_screen.dart';
 import 'package:sfb/features/home/home_screen.dart';
+
+/// A helper function to create a page with a fade transition.
+/// This function is used to provide a consistent fade transition
+/// between different screens in the app.
+Page<dynamic> fadeTransitionPageBuilder(
+  BuildContext context,
+  GoRouterState state,
+  Widget child,
+) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: CurveTween(
+          curve: Curves.easeInOutCirc,
+        ).animate(animation),
+        child: child,
+      );
+    },
+  );
+}
 
 /// AppRouter sets up the routing for the application using GoRouter.
 class AppRouter {
@@ -25,20 +48,40 @@ class AppRouter {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
-        name: AuthScreen.route,
-        path: AuthScreen.route,
-        builder: (context, state) => const AuthScreen(),
+        name: SignUpScreen.route,
+        path: SignUpScreen.route,
+        pageBuilder: (context, state) {
+          return fadeTransitionPageBuilder(
+            context,
+            state,
+            const SignUpScreen(),
+          );
+        },
+        // builder: (context, state) => const SignUpScreen(),
+      ),
+      GoRoute(
+        name: SignInScreen.route,
+        path: SignInScreen.route,
+        pageBuilder: (context, state) {
+          return fadeTransitionPageBuilder(
+            context,
+            state,
+            const SignInScreen(),
+          );
+        },
       ),
     ],
   );
 
   FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {
     final isLoggedIn = _authBloc.state.user != null;
-    final isLoggingIn = state.matchedLocation == AuthScreen.route;
+    final isLoggingIn =
+        state.matchedLocation == SignUpScreen.route ||
+        state.matchedLocation == SignInScreen.route;
 
     if (!isLoggedIn && !isLoggingIn) {
-      Log.t('Redirecting to AuthScreen');
-      return AuthScreen.route;
+      Log.t('Redirecting to SignUpScreen');
+      return SignInScreen.route;
     }
 
     if (isLoggedIn && isLoggingIn) {

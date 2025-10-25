@@ -40,6 +40,7 @@ abstract final class AppTheme {
       inputDecoratorBorderType: FlexInputBorderType.outline,
       alignedDropdown: true,
       navigationRailUseIndicator: true,
+      elevatedButtonRadius: 8,
     ),
     // ColorScheme seed generation configuration for light mode.
     keyColors: const FlexKeyColors(),
@@ -75,6 +76,7 @@ abstract final class AppTheme {
       inputDecoratorBorderType: FlexInputBorderType.outline,
       alignedDropdown: true,
       navigationRailUseIndicator: true,
+      elevatedButtonRadius: 8,
     ),
     // ColorScheme seed configuration setup for dark mode.
     keyColors: const FlexKeyColors(),

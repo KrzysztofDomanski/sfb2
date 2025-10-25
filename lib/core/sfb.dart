@@ -1,5 +1,5 @@
-import 'package:flutter/widget_previews.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sfb/core/dependency_injector.dart';
 import 'package:sfb/core/locale/app_localizations.dart';
