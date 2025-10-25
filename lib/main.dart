@@ -9,7 +9,8 @@ import 'package:sfb/core/sfb.dart';
 Future<void> main() async {
   Log.t('Application started');
 
-  await runZonedGuarded(
+  // ignore: unawaited_futures runZonedGuarded doesn't return anything
+  runZonedGuarded(
     () async {
       await initDatabase();
       configureDependencies();

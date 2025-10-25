@@ -36,7 +36,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       await _auth.signInWithPassword(email: username, password: password);
     } on AuthException catch (e) {
-      throw Exception(e.message);
+      throw SignInFailedException(e.message);
     } catch (e) {
       throw Exception('An unexpected error occurred during sign in.');
     }

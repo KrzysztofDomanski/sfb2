@@ -14,8 +14,9 @@ class RouterRefresh extends ChangeNotifier {
   }
 
   @override
-  Future<void> dispose() async {
-    await userSubscription?.cancel();
+  void dispose() {
+    // ignore: discarded_futures dispose is not async
+    userSubscription?.cancel();
     super.dispose();
   }
 }
