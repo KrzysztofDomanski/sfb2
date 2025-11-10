@@ -4,12 +4,9 @@ import 'package:sfb/core/dependency_injector.dart';
 import 'package:sfb/core/widgets/app_logo.dart';
 import 'package:sfb/core/widgets/app_title.dart';
 import 'package:sfb/features/auth/sign_up/bloc/sign_up_bloc.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/already_have_an_account_link.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/create_an_account_text.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/sign_up_button.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/sign_up_email.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/sign_up_error.dart';
-import 'package:sfb/features/auth/sign_up/presentation/widgets/sign_up_password.dart';
+import 'package:sfb/features/auth/widgets/auth_error.dart';
+import 'package:sfb/features/auth/widgets/continue_with_discord_button.dart';
+import 'package:sfb/features/auth/widgets/create_an_account_text.dart';
 
 /// The sign-up screen that allows users to create a new account.
 class SignUpScreen extends StatelessWidget {
@@ -36,15 +33,8 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: 64),
                     CreateAnAccountText(),
                     SizedBox(height: 16),
-                    SignUpEmail(),
-                    SizedBox(height: 16),
-                    SignUpPassword(),
-                    SizedBox(height: 24),
-                    SignUpError(),
-                    SignUpButton(),
-                    SizedBox(height: 16),
-                    Divider(),
-                    AlreadyHaveAnAccountLink(),
+                    AuthError(),
+                    ContinueWithDiscordButton(),
                   ],
                 ),
               ),
