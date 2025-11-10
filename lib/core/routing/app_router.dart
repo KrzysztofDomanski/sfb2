@@ -8,6 +8,7 @@ import 'package:sfb/features/auth/bloc/auth_bloc.dart';
 import 'package:sfb/features/auth/sign_in/presentation/sign_in_screen.dart';
 import 'package:sfb/features/auth/sign_up/presentation/sign_up_screen.dart';
 import 'package:sfb/features/home/home_screen.dart';
+import 'package:sfb/features/profile/presentation/profile_screen.dart';
 
 /// A helper function to create a page with a fade transition.
 /// This function is used to provide a consistent fade transition
@@ -43,9 +44,26 @@ class AppRouter {
     redirect: _redirect,
     routes: [
       GoRoute(
+        name: ProfileScreen.route,
+        path: ProfileScreen.route,
+        pageBuilder: (context, state) {
+          return fadeTransitionPageBuilder(
+            context,
+            state,
+            const ProfileScreen(),
+          );
+        },
+      ),
+      GoRoute(
         name: HomeScreen.route,
         path: HomeScreen.route,
-        builder: (context, state) => const HomeScreen(),
+        pageBuilder: (context, state) {
+          return fadeTransitionPageBuilder(
+            context,
+            state,
+            const HomeScreen(),
+          );
+        },
       ),
       GoRoute(
         name: SignUpScreen.route,
@@ -85,8 +103,8 @@ class AppRouter {
     }
 
     if (isLoggedIn && isLoggingIn) {
-      Log.t('Redirecting to HomeScreen');
-      return HomeScreen.route;
+      Log.t('Redirecting to ProfileScreen');
+      return ProfileScreen.route;
     }
 
     return null;

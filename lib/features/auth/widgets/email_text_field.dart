@@ -23,6 +23,13 @@ class EmailTextField extends StatefulWidget {
 
 class _EmailTextFieldState extends State<EmailTextField> {
   final _controller = TextEditingController();
+  final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.requestFocus();
+  }
 
   @override
   void dispose() {
@@ -33,6 +40,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: _focusNode,
       controller: _controller,
       onChanged: widget.onChanged,
       onSubmitted: widget.onSubmitted,
