@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sfb/features/auth/domain/auth_exceptions.dart' hide AuthException;
+import 'package:sfb/features/auth/domain/auth_exceptions.dart'
+    hide AuthException;
 import 'package:sfb/features/auth/domain/auth_repository.dart';
 import 'package:sfb/features/auth/domain/user.dart' as domain;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,24 +23,16 @@ class AuthRepositoryImpl extends AuthRepository {
       );
 
   @override
-  Future<void> signUp(String username, String password) async {
+  Future<void> continueWithDiscord() async {
     try {
-      await _auth.signUp(email: username, password: password);
-    } on AuthException catch (e) {
-      throw SignUpFailedException(e.message);
-    } catch (e) {
-      throw Exception('An unexpected error occurred during sign up.');
-    }
-  }
-
-  @override
-  Future<void> signIn(String username, String password) async {
-    try {
-      await _auth.signInWithPassword(email: username, password: password);
+      await _auth.signInWithOAuth(
+        OAuthProvider.discord,
+        redirectTo: kIsWeb ? null : 'com.kd.sfb://login-callback/',
+      );
     } on AuthException catch (e) {
       throw SignInFailedException(e.message);
     } catch (e) {
-      throw Exception('An unexpected error occurred during sign in.');
+      throw Exception('An unexpected error occurred during Discord sign in.');
     }
   }
 

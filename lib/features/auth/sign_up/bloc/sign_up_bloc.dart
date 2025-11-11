@@ -2,8 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sfb/core/logger.dart';
+import 'package:sfb/core/use_case.dart';
 import 'package:sfb/features/auth/domain/auth_exceptions.dart';
-import 'package:sfb/features/auth/domain/sign_up.dart';
+import 'package:sfb/features/auth/domain/continue_with_discord.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
@@ -11,46 +12,27 @@ part 'sign_up_state.dart';
 /// Bloc responsible for handling sign-up events and managing sign-up state.
 @injectable
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final SignUp _signUp;
+  final ContinueWithDiscord _continueWithDiscord;
 
-  SignUpBloc(SignUp signUp) : _signUp = signUp, super(const SignUpState()) {
-    on<EmailChanged>(_onEmailChanged);
-    on<PasswordChanged>(_onPasswordChanged);
-    on<SignUpRequested>(_onSignUpRequested);
+  SignUpBloc(ContinueWithDiscord continueWithDiscord)
+    : _continueWithDiscord = continueWithDiscord,
+      super(const SignUpState()) {
+    on<ContinueWithDiscordRequested>(_onContinueWithDiscord);
   }
 
-  void _onEmailChanged(
-    EmailChanged event,
-    Emitter<SignUpState> emit,
-  ) {
-    Log.t('Email changed: ${event.email}');
-
-    emit(state.copyWith(email: event.email, resetError: true));
-  }
-
-  void _onPasswordChanged(
-    PasswordChanged event,
-    Emitter<SignUpState> emit,
-  ) {
-    Log.t('Password changed: ${event.password}');
-
-    emit(state.copyWith(password: event.password, resetError: true));
-  }
-
-  Future<void> _onSignUpRequested(
-    SignUpRequested event,
+  Future<void> _onContinueWithDiscord(
+    ContinueWithDiscordRequested event,
     Emitter<SignUpState> emit,
   ) async {
-    Log.t('SignUp requested for email: ${state.email}');
-
+    Log.t('Continue with Discord requested');
     emit(state.copyWith(isSubmitting: true));
 
+    // Implementation for Discord sign-up would go here.
+    // For now, we just log the event.
     try {
-      await _signUp(SignUpParams(email: state.email, password: state.password));
-      Log.t('SignUp successful for email: ${state.email}');
-      emit(state.copyWith(isSubmitting: false, isSuccess: true));
-    } on SignUpFailedException catch (e) {
-      Log.e('SignUp failed', e);
+      await _continueWithDiscord(const NoParams());
+      Log.t('Continue with Discord initiated');
+    } on SignInFailedException catch (e) {
       emit(
         state.copyWith(
           isSubmitting: false,
@@ -59,12 +41,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         ),
       );
     } catch (e) {
-      Log.e('SignUp failed', e);
       emit(
         state.copyWith(
           isSubmitting: false,
           isSuccess: false,
-          errorMessage: 'An unexpected error occurred during sign up.',
+          errorMessage: 'An unexpected error occurred during Discord sign in.',
         ),
       );
     }

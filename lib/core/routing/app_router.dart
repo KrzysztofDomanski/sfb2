@@ -5,8 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sfb/core/logger.dart';
 import 'package:sfb/core/routing/router_refresh.dart';
 import 'package:sfb/features/auth/bloc/auth_bloc.dart';
-import 'package:sfb/features/auth/sign_in/presentation/sign_in_screen.dart';
-import 'package:sfb/features/auth/sign_up/presentation/sign_up_screen.dart';
+import 'package:sfb/features/auth/presentation/auth_screen.dart';
 import 'package:sfb/features/home/home_screen.dart';
 import 'package:sfb/features/profile/presentation/profile_screen.dart';
 
@@ -77,29 +76,16 @@ class AppRouter {
         },
         // builder: (context, state) => const SignUpScreen(),
       ),
-      GoRoute(
-        name: SignInScreen.route,
-        path: SignInScreen.route,
-        pageBuilder: (context, state) {
-          return fadeTransitionPageBuilder(
-            context,
-            state,
-            const SignInScreen(),
-          );
-        },
-      ),
     ],
   );
 
   FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {
     final isLoggedIn = _authBloc.state.user != null;
-    final isLoggingIn =
-        state.matchedLocation == SignUpScreen.route ||
-        state.matchedLocation == SignInScreen.route;
+    final isLoggingIn = state.matchedLocation == SignUpScreen.route;
 
     if (!isLoggedIn && !isLoggingIn) {
       Log.t('Redirecting to SignUpScreen');
-      return SignInScreen.route;
+      return SignUpScreen.route;
     }
 
     if (isLoggedIn && isLoggingIn) {

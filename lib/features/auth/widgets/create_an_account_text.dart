@@ -10,8 +10,8 @@ class CreateAnAccountText extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        'Create your account',
-        style: context.textTheme.headlineSmall,
+        'Sign up or log in using your Discord account to continue',
+        style: context.textTheme.titleMedium,
       ),
     );
   }
